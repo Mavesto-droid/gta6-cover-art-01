@@ -273,13 +273,21 @@ function fitLines(ctx, text, maxWidth, size) {
 let grainTile = null;
 function getGrainTile() {
   if (grainTile) return grainTile;
+  // Seeded noise, so the grain is the same on every render and export.
+  let seed = 0x9e3779b9;
+  const rand = () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
   const t = document.createElement('canvas');
   t.width = 128;
   t.height = 128;
   const c = t.getContext('2d');
   const img = c.createImageData(128, 128);
   for (let i = 0; i < img.data.length; i += 4) {
-    const v = 96 + Math.floor(Math.random() * 96);
+    const v = 96 + Math.floor(rand() * 96);
     img.data[i] = v;
     img.data[i + 1] = v;
     img.data[i + 2] = v;
