@@ -1,0 +1,212 @@
+@font-face {
+  font-family: 'Anton';
+  src: url('./fonts/Anton-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pacifico';
+  src: url('./fonts/Pacifico-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0d0616;
+  color: #f2e9ff;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+/* The app fills exactly one viewport: the controls column scrolls on its
+   own, and the preview canvas stays centred in the visible stage. (With
+   min-height the stage grew to the sidebar's full height and pushed the
+   canvas below the fold on short windows.) */
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.controls {
+  width: 320px;
+  flex: 0 0 320px;
+  padding: 18px 16px 32px;
+  background: #160a24;
+  border-right: 1px solid #3b1a4e;
+  overflow-y: auto;
+}
+
+.controls h1 {
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-size: 34px;
+  letter-spacing: 2px;
+  margin: 0;
+  background: linear-gradient(90deg, #ffd166, #ff5e78, #ff2e88);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tag { margin: 4px 0 0; color: #c9aee0; font-size: 13px; }
+
+.group { margin-top: 20px; }
+.group h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ff9a5c;
+  margin: 0 0 8px;
+  border-bottom: 1px solid #3b1a4e;
+  padding-bottom: 4px;
+}
+
+label { display: block; margin: 8px 0; color: #e6d6f5; }
+label.check { display: flex; align-items: center; gap: 8px; }
+input[type="text"], select {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  background: #241238;
+  border: 1px solid #5b2a7a;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+}
+input[type="range"] { width: 100%; accent-color: #ff2e88; }
+input[type="file"] { display: none; }
+.file-label { color: #00e5ff; cursor: pointer; text-decoration: underline; }
+
+.drop {
+  border: 1px dashed #5b2a7a;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  color: #c9aee0;
+  background: #1d0d31;
+}
+
+.thumbs { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.thumb {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  width: 72px;
+  height: 72px;
+}
+.thumb:hover { border-color: #ff2e88; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.hint { color: #9d7fb8; font-size: 12px; margin: 6px 0 0; }
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.btn-grid button {
+  padding: 8px 10px;
+  background: #241238;
+  border: 1px solid #5b2a7a;
+  border-radius: 6px;
+  color: #f2e9ff;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+}
+.btn-grid button:hover { border-color: #ff2e88; }
+.btn-grid button.on {
+  border-color: #ff2e88;
+  background: #3b1a4e;
+  box-shadow: 0 0 0 1px #ff2e88 inset;
+}
+.grade-btn::before {
+  content: '';
+  display: block;
+  height: 10px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+  background: var(--sw, #888);
+}
+.mini {
+  display: block;
+  height: 26px;
+  margin-bottom: 6px;
+  border-radius: 3px;
+  background: #3b1a4e;
+  position: relative;
+  overflow: hidden;
+}
+.mini::before, .mini::after { content: ''; position: absolute; background: #ff9a5c; }
+.m-grid4::before { inset: 0 52% 52% 0; background: #ff5e78; }
+.m-grid4::after { inset: 52% 0 0 52%; background: #00e5ff; }
+.m-hero3::before { inset: 0 40% 0 0; background: #ff5e78; }
+.m-hero3::after { inset: 0 0 0 62%; background: #00e5ff; }
+.m-full::before { inset: 0; background: linear-gradient(135deg, #ff5e78, #ffb347); }
+.m-grid9::before { inset: 0; background:
+  linear-gradient(#ff5e78 0 33%, transparent 33% 66%, #00e5ff 66% 100%); }
+.m-tilt { transform: rotate(-2deg); }
+.m-tilt::before { inset: 15% 10% 15% 10%; background: #ff5e78; transform: rotate(6deg); }
+.m-strip::before { inset: 0 33% 0 33%; background: #00e5ff; }
+.m-strip::after { inset: 0 66% 0 0; background: #ff5e78; }
+
+.row { display: flex; gap: 8px; margin-top: 8px; }
+.row button { flex: 1; }
+
+button.primary, button.ghost {
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+button.primary {
+  background: linear-gradient(90deg, #ff2e88, #ff5e78);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+}
+button.primary:hover { filter: brightness(1.15); }
+button.ghost {
+  background: #241238;
+  border: 1px solid #5b2a7a;
+  color: #f2e9ff;
+}
+button.ghost:hover { border-color: #ff2e88; }
+button.ghost:disabled { opacity: 0.4; cursor: default; }
+
+#status { color: #7ee2a8; min-height: 18px; font-size: 13px; }
+
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 46, 136, 0.18), transparent 55%),
+    radial-gradient(ellipse at 90% 100%, rgba(0, 229, 255, 0.14), transparent 55%),
+    #0d0616;
+}
+.stage canvas {
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* Screenshot scenes: cover alone, full frame. */
+body.shot-cover { background: #12061f; }
+body.shot-cover .controls { display: none; }
+body.shot-cover .stage { padding: 0; background: #12061f; }
+body.shot-cover .stage canvas {
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100vh;
+  box-shadow: none;
+}
